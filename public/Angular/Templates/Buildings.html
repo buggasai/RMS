@@ -1,0 +1,239 @@
+﻿<style>
+    .ng-modal-overlay {
+        /* A dark translucent div that covers the whole screen */
+        position: absolute;
+        z-index: 9999;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #000000;
+        opacity: 0.8;
+    }
+
+    .ng-modal-dialog {
+        /* A centered div above the overlay with a box shadow. */
+        z-index: 10000;
+        position: absolute;
+        width: 50%; /* Default */
+        /* Center the dialog */
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        -webkit-transform: translate(-50%, -50%);
+        -moz-transform: translate(-50%, -50%);
+        background-color: #fff;
+        box-shadow: 4px 4px 80px #000;
+    }
+
+    .ng-modal-dialog-content {
+        padding: 10px;
+        text-align: left;
+    }
+
+    .ng-modal-close {
+        position: absolute;
+        top: 3px;
+        right: 5px;
+        padding: 5px;
+        cursor: pointer;
+        font-size: 120%;
+        display: inline-block;
+        font-weight: bold;
+        font-family: 'arial', 'sans-serif';
+    }
+
+    .dataTables_scroll {
+        overflow: auto;
+    }
+</style>
+<div class="container">
+    <div class="panel">
+        <div class="panel-heading border">
+            <h1>
+                Buildings
+            </h1>
+        </div>
+        <div style="margin-left:15px">
+            <a ui-sref="home.CreateBuilding"> <button class="btn btn-primary navbar-btn">Add Building</button> </a>
+        </div>
+        <div class="panel-body">
+            <table class="table table-bordered bordered table-striped table-condensed datatable" ui-jq="dataTable" ui-options="dataTableOpt">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Address</th>
+                        <th>Owner</th>
+                        <th>Residential/Commercial</th>
+                        <th>Building Units</th>
+                        <th>Created Date</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="n in Buildings">
+                        <td>{{$index+1}} <input type="hidden" value="{{n._id}}" /></td>
+                        <td>  <a ui-sref="home.EditBuilding({ id:n._id})" style="color:hotpink;cursor:pointer"> {{n.BuildingName}} </a></td>
+                        <td>{{n.Address1}} , {{n.Address2}}</td>
+                        <td>{{n.join_output[0].FirstName + " " + n.join_output[0].LastName}}</td>
+                        <td>{{n.IsResidential == false ? "Commercial" : "Residential"}}</td>
+                        <td>{{n.BuildingUnits.length}}</td>
+                        <td>{{n.Created_date | date:'dd/MM/yyyy'}}</td>
+
+                        <td style="width:135px"><button ng-click="toggleModalBuildingUnits({id:n._id})" class="glyphicon glyphicon-eye-open"></button><button ng-click="toggleModalViewBuilding({ id:n._id})" class="glyphicon glyphicon-open-file"></button> <button ng-click="deleteBuilding({ id:n._id})" class="glyphicon glyphicon-trash"></button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<modal-dialog show='BuildingUnitsmodalShown' width='750px' height='60%'>
+    <div style="margin-left:15px">
+        <button ng-click="showAddPortionDiv()" id="btnPortion" class="btn btn-primary navbar-btn">Add Portion</button>
+    </div>
+    <table id="tblBuildingUnits" class="display" cellspacing="0">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Floor Number</th>
+                <th>Door/Flat Number</th>
+                <th>Portion Type</th>
+                <th>Area</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="n in Portions">
+                <td>{{$index+1}} <input type="hidden" value="{{n._id}}" /></td>
+                <td>
+                    <a>
+                        {{ n.FloorNumber == 0 ? 'Ground Floor' : n.FloorNumber == 1 ? '1st Floor' : n.FloorNumber == 2 ? '2nd Floor' : n.FloorNumber == 3 ? '3rd Floor' : n.FloorNumber == 4 ? '4th Floor' : n.FloorNumber == 5 ? '5th Floor' : 'N/A'}}
+                    </a>
+                </td>
+                <td>{{n.FlatNumber}}</td>
+                <td>{{n.PortionType == 1 ? 'Single Room' :n.PortionType == 2?'Single Bed Room':n.PortionType == 3?'Double Bed Room':n.PortionType == 4?'Thriple Bed Room': 'N/A'}}</td>
+                <td>{{n.AreaInSFT}}</td>
+                <td><button ng-click="deleteBuildingUnit({ id:n._id})" class="glyphicon glyphicon-trash"></button></td>
+            </tr>
+        </tbody>
+    </table>
+    <div id="divNewBuildingUnits" class="container body" style="display:none">
+        <form name="formAddBuildingUnits" ng-submit="manageBuildingUnits(buildingUnitsObject)" class="form-horizontal form-label-left" novalidate>
+            <div class="main_container">
+                <div class="item form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="floorNumber">
+                        Floor Number <span class="required">*</span>
+                    </label>
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        <select class="form-control" ng-model="buildingUnitsObject.FloorNumber">
+                            <option value="" ng-selected="selected">Select Floor Number</option>
+                            <option value="0">Ground Floor</option>
+                            <option value="1">1st Floor</option>
+                            <option value="2">2nd Floor</option>
+                            <option value="3">3rd Floor</option>
+                            <option value="4">4th Floor</option>
+                            <option value="5">5th Floor</option>
+                        </select>
+                        <span ng-show="myForm.service_id.$error.required">Select service</span>
+                    </div>
+                </div>
+            </div>
+            <div class="item form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="doorNumber">
+                    Door/Flat Number <span class="required">*</span>
+                </label>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    <input type="text" id="doorNumber" name="doorNumber" ng-model="buildingUnitsObject.FlatNumber" class="form-control col-md-7 col-xs-12" placeholder="Door/Flat No" required="required">
+                    <span ng-show="formBuildingUnits.doorNumber.$dirty && formBuildingUnits.doorNumber.$error.required" class="has-error">Door/Flat is required</span>
+                </div>
+            </div>
+            <div class="main_container">
+                <div class="item form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="PortionType">
+                        Portion Type <span class="required">*</span>
+                    </label>
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        <select class="form-control" ng-model="buildingUnitsObject.PortionType">
+                            <option value="" ng-selected="selected">Select Portion Type</option>
+                            <option value="1">Single Room</option>
+                            <option value="2">Single Bed Room</option>
+                            <option value="3">Double Bed Room</option>
+                            <option value="4">Thriple Bed Room</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="item form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="area">
+                    Area
+                </label>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    <input type="text" id="area" name="area" ng-model="buildingUnitsObject.AreaInSFT" class="form-control col-md-7 col-xs-12" placeholder="Area">
+                </div>
+            </div>
+            <div class="ln_solid"></div>
+            <div class="form-group">
+                <div class="col-md-6 col-md-offset-3">
+                    <button ng-click="hideModal()" class="btn btn-primary">Cancel</button>
+                    <button id="submit" type="submit" ng-disabled=formAddBuildingUnits.$invalid class="btn btn-success">Save</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</modal-dialog>
+<modal-dialog show='viewBuildingModalShown' width='750px' height='60%'>
+    <div class="row col-md-12 col-sm-12 col-xs-12">
+        <div class="col-md-6 col-sm-6 col-xs-6">
+            Building Name : <span>{{buildingById.BuildingName}}</span>
+        </div>
+        <div class="col-md-6 col-sm-6 col-xs-6">
+            Owner : <span>{{buildingById.Owner}}</span>
+        </div>
+    </div>
+    <div class="row col-md-12 col-sm-12 col-xs-12">
+        <div class="col-md-6 col-sm-6 col-xs-6">
+            Residential/Commercial : <span>{{buildingById.Residential_Commercial}}</span>
+        </div>
+        <div class="col-md-6 col-sm-6 col-xs-6">
+            BuildingUnits : <span>{{buildingById.BuildingUnits.length}}</span>
+        </div>
+    </div>
+    <div class="row col-md-12 col-sm-12 col-xs-12">
+        <div class="col-md-6 col-sm-6 col-xs-6">
+            Address1 : <span>{{buildingById.Address1}}</span>
+        </div>
+        <div class="col-md-6 col-sm-6 col-xs-6">
+            Address2 : <span>{{buildingById.Address2}}</span>
+        </div>
+    </div>
+    <div class="row col-md-12 col-sm-12 col-xs-12">
+        <div class="col-md-6 col-sm-6 col-xs-6">
+            City : <span>{{buildingById.City}}</span>
+        </div>
+        <div class="col-md-6 col-sm-6 col-xs-6">
+            State : <span>{{buildingById.State}}</span>
+        </div>
+    </div>
+    <div class="row col-md-12 col-sm-12 col-xs-12">
+        <div class="col-md-6 col-sm-6 col-xs-6">
+            ZipCode : <span>{{buildingById.ZipCode}}</span>
+        </div>
+        <div class="col-md-6 col-sm-6 col-xs-6">
+
+        </div>
+    </div>
+</modal-dialog>
+<script>
+    $(document).ready(function () {
+
+        $('#tblBuildingUnits').DataTable({
+            //"scrollY": "200px",
+            "scrollCollapse": true,
+            "paging": false,
+            "searching": false
+        });
+
+    });
+</script>

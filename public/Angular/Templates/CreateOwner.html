@@ -1,0 +1,111 @@
+﻿
+<div class="container body">
+    <div class="main_container">
+        <div role="main">
+            <div class="">
+                <div class="clearfix"></div>
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="x_panel">
+                            <div class="x_title">
+                                <h2>Owners <small>Add owner</small></h2>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="x_content">
+                                
+                                <form name="formAddOwner" ng-submit="manageOwner(ownerObject)" class="form-horizontal form-label-left" novalidate>
+                                    <span class="section">Personal Info</span>
+                                    <div class="item form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
+                                            First Name <span class="required">*</span>
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <input type="text" id="firstName" name="firstName" ng-model="ownerObject.FirstName" class="form-control col-md-7 col-xs-12" placeholder="First Name" required="required">
+                                            <span ng-show="formAddOwner.firstName.$dirty && formAddOwner.firstName.$error.required" class="has-error">First Name is required</span>
+                                        </div>
+                                    </div>
+                                    <div class="item form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
+                                            Last Name <span class="required">*</span>
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <input type="text" id="lastName" name="lastName" ng-model="ownerObject.LastName" class="form-control col-md-7 col-xs-12" placeholder="Last Name" required="required">
+                                            <span ng-show="formAddOwner.lastName.$dirty && formAddOwner.lastName.$error.required" class="has-error">Last Name is required</span>
+                                        </div>
+                                    </div>
+                                    <div class="item form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">
+                                            Email <span class="required">*</span>
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <input type="email" id="email" ng-model="ownerObject.Email" name="email" required="required" class="form-control col-md-7 col-xs-12">
+                                            <span ng-show="formAddOwner.email.$dirty && formAddOwner.email.$error.required" class="has-error">Email is required</span>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="item form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="address">
+                                            Address
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <input type="text" id="address" ng-model="ownerObject.Address1" name="address" class="form-control col-md-7 col-xs-12">
+                                        </div>
+                                    </div>
+                                    <div class="item form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="city">
+                                            City
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <input type="text" id="city" name="city" ng-model="ownerObject.City" class="form-control col-md-7 col-xs-12">
+                                        </div>
+                                    </div>
+
+                                    <div class="item form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="number">
+                                            Zipcode
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <input type="number" id="zipcode" name="zipcode" ng-model="ownerObject.ZipCode" class="form-control col-md-7 col-xs-12">
+                                        </div>
+                                    </div>
+                                    <div class="item form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="homePhone">
+                                            Home Phone
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <input type="tel" id="homePhone" name="homePhone" ng-model="ownerObject.HomePhone" class="form-control col-md-7 col-xs-12">
+                                        </div>
+                                    </div>
+                                    <div class="item form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="workPhone">
+                                            Work Phone
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <input type="tel" id="workPhone" name="workPhone" ng-model="ownerObject.WorkPhone" class="form-control col-md-7 col-xs-12">
+                                        </div>
+                                    </div>
+                                    <div class="item form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="mobile">
+                                            Mobile
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <input type="tel" id="mobile" name="mobile" ng-model="ownerObject.Mobile" class="form-control col-md-7 col-xs-12">
+                                        </div>
+                                    </div>
+                                    <div class="ln_solid"></div>
+                                    <div class="form-group">
+                                        <div class="col-md-6 col-md-offset-3">
+                                            <a ui-sref="home.Owners"> <button class="btn btn-primary">Cancel</button> </a>
+                                            <button id="submit" type="submit" ng-disabled=formAddOwner.$invalid class="btn btn-success">{{ownerButton}}</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

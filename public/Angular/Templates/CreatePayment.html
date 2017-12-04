@@ -1,0 +1,102 @@
+﻿<div class="container body">
+    <div class="main_container">
+        <div role="main">
+            <div class="">
+                <div class="clearfix"></div>
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="x_panel">
+                            <div class="x_title">
+                                <h2>Payment <small>Add Payment</small></h2>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="x_content">
+                                <form name="formAddPayment" ng-submit="managePayment(PaymentObject)" enctype="multipart/form-data" class="form-horizontal form-label-left" novalidate>
+                                    <span class="section">Payment Info</span>
+                                    <div class="item form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="Description">
+                                            Amount <span class="required">*</span>
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <input type="number" id="amount" name="amount" ng-model="PaymentObject.Amount" class="form-control col-md-7 col-xs-12" placeholder="Enter Amount" required="required">
+                                            <span ng-show="formAddPayment.amount.$dirty && formAddPayment.amount.$error.required" class="has-error">Amount required</span>
+                                        </div>
+                                    </div>
+                                    <div class="item form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="Date">
+                                            Date
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <input type="date" id="Date" ng-model="PaymentObject.Date" name="Date" class="form-control col-md-7 col-xs-12">
+                                        </div>
+                                    </div>
+
+                                    <div class="item form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="SelectCatory">
+                                            Payment for month
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <select ng-model="PaymentObject.PaymentForMonth" class="form-control">
+                                                <option value="" ng-selected="selected">Select Month</option>
+                                                <option value="Jan1-Feb1">Jan 1 - Feb 1</option>
+                                                <option value="Feb1-Mar1">Feb 1 - Mar 1</option>
+                                                <option value="Mar1-Apr1">Mar 1 - Apr 1</option>
+                                                <option value="Apr1-May1">Apr 1 - May 1</option>
+                                                <option value="May1-Jum1">May 1 - Jun 1</option>
+                                                <option value="Jun1-Jul1">Jun 1 - Jul 1</option>
+                                                <option value="Jul1-Aug1">Jul 1 - Aug 1</option>
+                                                <option value="Aug1-Sep1">Aug 1 - Sep 1</option>
+                                                <option value="Sep1-Oct1">Sep 1 - Oct 1</option>
+                                                <option value="Oct1-Nov1">Oct 1 - Nov 1</option>
+                                                <option value="Nov1-Dec1">Nov 1 - Dec 1</option>
+                                                <option value="Dec1-Jan1">Dec 1 - jan 1</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="item form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="Note">
+                                            Payment for year
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <input type="number" id="paymentForYear" ng-model="PaymentObject.PaymentForYear" name="paymentForYear" class="form-control col-md-7 col-xs-12" />
+                                        </div>
+                                    </div>
+                                    <div class="item form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="Aadhar">
+                                            Add Photo
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <input type="file" name="attachment" ngf-pattern="'image/*'" accept="image/*" ngf-max-size="20MB" 
+                                                   ngf-select data-ak-file-model="PaymentObject.attachment" class="form-control col-md-7 col-xs-12">
+                                            <!--Image thumbnail: <img style="width:100px;" ngf-thumbnail="tenantObject.file || '/thumb.jpg'" />.-->
+                                            <i ng-show="formAddPayment.attachment.$error.required">*required</i><br>
+                                            <i ng-show="formAddPayment.attachment.$error.maxSize">
+                                                File too large
+                                                {{tenantObject.attachment.size / 1000000|number:1}}MB: max 20M
+                                            </i>
+                                        </div>
+                                    </div>
+                                    <div class="item form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="Note">
+                                            Note
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <textarea rows="4" cols="5" id="Note" ng-model="PaymentObject.Note" name="Note" class="form-control col-md-7 col-xs-12"> </textarea>
+                                        </div>
+                                    </div>
+                                    <div class="ln_solid"></div>
+                                    <div class="form-group">
+                                        <div class="col-md-6 col-md-offset-3">
+                                            <a ui-sref="home.Payments"> <button class="btn btn-primary">Cancel</button> </a>
+                                            <button id="submit" type="submit" ng-disabled=formAddPayment.$invalid class="btn btn-success">{{PaymentButton}}</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

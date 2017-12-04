@@ -1,0 +1,138 @@
+﻿<style>
+    .ng-modal-overlay {
+        /* A dark translucent div that covers the whole screen */
+        position: absolute;
+        z-index: 9999;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #000000;
+        opacity: 0.8;
+    }
+
+    .ng-modal-dialog {
+        /* A centered div above the overlay with a box shadow. */
+        z-index: 10000;
+        position: absolute;
+        width: 50%; /* Default */
+        /* Center the dialog */
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        -webkit-transform: translate(-50%, -50%);
+        -moz-transform: translate(-50%, -50%);
+        background-color: #fff;
+        box-shadow: 4px 4px 80px #000;
+    }
+
+    .ng-modal-dialog-content {
+        padding: 10px;
+        text-align: left;
+    }
+
+    .ng-modal-close {
+        position: absolute;
+        top: 3px;
+        right: 5px;
+        padding: 5px;
+        cursor: pointer;
+        font-size: 120%;
+        display: inline-block;
+        font-weight: bold;
+        font-family: 'arial', 'sans-serif';
+    }
+</style>
+
+<div class="container">
+    <div class="panel">
+        <div class="panel-heading border">
+            <h1>
+                Owners
+            </h1>
+        </div>
+        <div style="margin-left:15px">
+            <!--<button type="button" class="btn btn-primary" ng-click="createOwner()">Add Owners</button>-->
+            <a ui-sref="home.CreateOwner"> <button class="btn btn-primary navbar-btn">Add Owner</button> </a>
+        </div>
+        <div class="panel-body">
+            <table class="table table-bordered bordered table-striped table-condensed datatable" ui-jq="dataTable" ui-options="dataTableOpt">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Address</th>
+                        <th>City</th>
+                        <th>Mobile</th>
+                        <th>Created Date</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="n in Owners">
+                        <td>{{$index+1}} <input type="hidden" value="{{n._id}}" /></td>
+                        <td>  <a ui-sref="home.EditOwner({ id:n._id})" style="color:hotpink;cursor:pointer"> {{n.FirstName}} {{n.LastName}} </a></td>
+                        <td>{{n.Address1}} , {{n.Address2}}</td>
+                        <td>{{n.City}}</td>
+                        <td>{{n.Mobile}}</td>
+                        <td>{{n.CreatedDate | date:'dd/MM/yyyy'}}</td>
+
+                        <td style="width:90px"><button ng-click="toggleModal({ id:n._id})" class="glyphicon glyphicon-open-file"></button> <button ng-click="deleteOwner({ id:n._id})" class="glyphicon glyphicon-trash"></button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<modal-dialog show='modalShown' width='750px' height='60%'>
+    <div class="row col-md-12 col-sm-12 col-xs-12">
+        <div class="col-md-6 col-sm-6 col-xs-6">
+            First Name : <span>{{ownerById.FirstName}}</span>
+        </div>
+        <div class="col-md-6 col-sm-6 col-xs-6">
+            Last Name : <span>{{ownerById.LastName}}</span>
+        </div>
+    </div>
+    <div class="row col-md-12 col-sm-12 col-xs-12">
+        <div class="col-md-6 col-sm-6 col-xs-6">
+            Email : <span>{{ownerById.Email}}</span>
+        </div>
+        <div class="col-md-6 col-sm-6 col-xs-6">
+            Mobile : <span>{{ownerById.Mobile}}</span>
+        </div>
+    </div>
+    <div class="row col-md-12 col-sm-12 col-xs-12">
+        <div class="col-md-6 col-sm-6 col-xs-6">
+            Home Phone : <span>{{ownerById.HomePhone}}</span>
+        </div>
+        <div class="col-md-6 col-sm-6 col-xs-6">
+            Work Phone : <span>{{ownerById.WorkPhone}}</span>
+        </div>
+    </div>
+    <div class="row col-md-12 col-sm-12 col-xs-12">
+        <div class="col-md-6 col-sm-6 col-xs-6">
+            Address1 : <span>{{ownerById.Address1}}</span>
+        </div>
+        <div class="col-md-6 col-sm-6 col-xs-6">
+            Address2 : <span>{{ownerById.Address2}}</span>
+        </div>
+    </div>
+    <div class="row col-md-12 col-sm-12 col-xs-12">
+        <div class="col-md-6 col-sm-6 col-xs-6">
+            City : <span>{{ownerById.City}}</span>
+        </div>
+        <div class="col-md-6 col-sm-6 col-xs-6">
+            State : <span>{{ownerById.State}}</span>
+        </div>
+    </div>
+    <div class="row col-md-12 col-sm-12 col-xs-12">
+        <div class="col-md-6 col-sm-6 col-xs-6">
+            ZipCode : <span>{{ownerById.ZipCode}}</span>
+        </div>
+        <div class="col-md-6 col-sm-6 col-xs-6">
+           
+        </div>
+    </div>
+</modal-dialog>
+

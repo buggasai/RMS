@@ -1,0 +1,233 @@
+﻿
+<div class="container body">
+    <div class="main_container">
+        <div role="main">
+            <div class="">
+                <div class="clearfix"></div>
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="x_panel">
+                            <div class="x_title">
+                                <h2>Tenant <small>Add Tenant</small></h2>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="x_content">
+                                <form name="formAddTenat" enctype="multipart/form-data" ng-submit="manageTenant(tenantObject)" class="form-horizontal form-label-left" novalidate>
+                                    <span class="section">Tenant Info</span>
+                                    <div class="item form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="firstName">
+                                            First Name <span class="required">*</span>
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <input type="text" id="firstName" name="firstName" ng-model="tenantObject.FirstName" class="form-control col-md-7 col-xs-12" placeholder="First Name" required="required">
+                                            <span ng-show="formAddTenat.firstName.$dirty && formAddTenat.firstName.$error.required" class="has-error">First Name is required</span>
+                                        </div>
+                                    </div>
+                                    <div class="item form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="lastName">
+                                            Last Name <span class="required">*</span>
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <input type="text" id="lastName" name="lastName" ng-model="tenantObject.LastName" class="form-control col-md-7 col-xs-12" placeholder="Last Name" required="required">
+                                            <span ng-show="formAddTenat.lastName.$dirty && formAddTenat.lastName.$error.required" class="has-error">Last Name is required</span>
+                                        </div>
+                                    </div>
+                                    <div class="item form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="address1">
+                                            Address 1 <span class="required">*</span>
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <input type="text" id="address1" name="address1" ng-model="tenantObject.Address1" class="form-control col-md-7 col-xs-12" placeholder="Addres1" required="required">
+                                            <span ng-show="formAddTenat.address1.$dirty && formAddTenat.address1.$error.required" class="has-error">Address1 is required</span>
+
+                                        </div>
+                                    </div>
+                                    <div class="item form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="address">
+                                            Address 2
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <input type="text" id="address2" ng-model="tenantObject.Address2" name="address2" class="form-control col-md-7 col-xs-12">
+                                        </div>
+                                    </div>
+                                    <div class="item form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="HomePhone">
+                                            Home Phone
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <input type="text" id="HomePhone" name="HomePhone" ng-model="tenantObject.HomePhone" class="form-control col-md-7 col-xs-12">
+                                        </div>
+                                    </div>
+                                    <div class="item form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="WorkPhone">
+                                            Work Phone
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <input type="text" id="WorkPhone" name="WorkPhone" ng-model="tenantObject.WorkPhone" class="form-control col-md-7 col-xs-12">
+                                        </div>
+                                    </div>
+                                    <div class="item form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="Mobile">
+                                            Mobile
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <input type="number" id="Mobile" name="Mobile" ng-model="tenantObject.Mobile" class="form-control col-md-7 col-xs-12">
+                                        </div>
+                                    </div>
+                                    <div class="item form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="Email">
+                                            Email
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <input type="email" id="Email" name="Email" ng-model="tenantObject.Email" class="form-control col-md-7 col-xs-12">
+                                        </div>
+                                    </div>
+                                    <div class="item form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="buildingName">
+                                            Select Building <span class="required">*</span>
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <select class="form-control" ng-change="bindBuildingUnitByBuildingId(tenantObject.BuildingId);" ng-model="tenantObject.BuildingId" name="building" required="required">
+                                                <option value=""> Select </option>
+                                                <option ng-repeat="building in Buildings" value="{{building._id}}"> {{building.BuildingName}} </option>
+                                            </select>
+                                            <span ng-show="formAddTenat.building.$dirty && formAddTenat.building.$invalid" class="has-error">Select Building</span>
+                                        </div>
+                                    </div>
+                                    <div class="item form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="BuildingName">
+                                            Select Building Unit <span class="required">*</span>
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <select ng-disabled="building === {}" class="form-control" ng-model="tenantObject.BuildingUnitId" name="buildingUnit" required="required">
+                                                <option value=""> Select </option>
+                                                <option ng-repeat="portion in Portions" value="{{portion._id}}"> {{portion.FlatNumber}} </option>
+                                            </select>
+                                            <span ng-show="formAddTenat.buildingUnit.$dirty && formAddTenat.buildingUnit.$invalid" class="has-error">Select Building Unit</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="item form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="Rent">
+                                            Rent <span class="required">*</span>
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <input type="number" ng-model="tenantObject.RentAmount" id="rentAmount" name="rentAmount" class="form-control col-md-7 col-xs-12" required="required" />
+                                        </div>
+                                        <span ng-show="formAddTenat.RentAmount.$dirty && formAddTenat.RentAmount.$invalid" class="has-error">Rent is required</span>
+                                    </div>
+                                    <div class="item form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="DepositAmount">
+                                            Deposit Amount
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <input type="number" id="DepositAmount" name="DepositAmount" ng-model="tenantObject.DepositAmount" class="form-control col-md-7 col-xs-12">
+                                        </div>
+                                    </div>
+                                    <div class="item form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="DepositPaidDate">
+                                            Deposit Paid Date
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <input type="date" id="DepositPaidDate" name="DepositPaidDate" ng-model="tenantObject.DepositPaidDate" class="form-control col-md-7 col-xs-12">
+                                        </div>
+                                    </div>
+                                    <div class="item form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="MoveInDate">
+                                            Move In Date
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <input type="date" id="MoveInDate" name="MoveInDate" ng-model="tenantObject.MoveInDate" class="form-control col-md-7 col-xs-12">
+                                        </div>
+                                    </div>
+                                    <div class="item form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="LeaseStartDate">
+                                            Lease Start Date
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <input type="date" id="LeaseStartDate" name="LeaseStartDate" ng-model="tenantObject.LeaseStartDate" class="form-control col-md-7 col-xs-12">
+                                        </div>
+                                    </div>
+                                    <div class="item form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="LeasePeriod">
+                                            Lease Period
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <input type="number" id="LeasePeriod" name="LeasePeriod" ng-model="tenantObject.LeasePeriod" class="form-control col-md-7 col-xs-12">
+                                        </div>
+                                    </div>
+                                    <div class="item form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="RentDueDate">
+                                            Rent Due Date
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <input type="date" id="RentDueDate" name="RentDueDate" ng-model="tenantObject.RentDueDate" class="form-control col-md-7 col-xs-12">
+                                        </div>
+                                    </div>
+                                    <div class="item form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" ng-init="tenantObject.IsResidential=false" ng-model="tenantObject.IsResidential" for="TenantMovedOut">
+                                            Tenant Moved Out ?
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <input type="checkbox" ng-model="tenantObject.TenantMovedOut" />
+                                        </div>
+                                    </div>
+                                    <div class="item form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="RentDueDate">
+                                            Notes
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <textarea rows="4" cols="6" id="Notes" name="Notes" ng-model="tenantObject.Notes" class="form-control col-md-7 col-xs-12"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="item form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="Aadhar">
+                                            Address Proff
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <input type="file" name="attachment" ngf-pattern="'image/*'" accept="image/*" ngf-max-size="20MB" multiple
+                                                   ngf-select data-ak-file-model="tenantObject.attachment" class="form-control col-md-7 col-xs-12">
+                                            <!--Image thumbnail: <img style="width:100px;" ngf-thumbnail="tenantObject.file || '/thumb.jpg'" />.-->
+                                            <i ng-show="formAddTenat.attachment.$error.required">*required</i><br>
+                                            <i ng-show="formAddTenat.attachment.$error.maxSize">
+                                                File too large
+                                                {{tenantObject.attachment.size / 1000000|number:1}}MB: max 20M
+                                            </i>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="ln_solid"></div>
+                                    <div class="form-group">
+                                        <div class="col-md-6 col-md-offset-3">
+                                            <a ui-sref="home.Tenants"> <button class="btn btn-primary">Cancel</button> </a>
+                                            <button id="submit" type="submit" ng-disabled=formAddTenat.$invalid class="btn btn-success">{{tenantButton}}</button>
+                                        </div>
+                                    </div>
+                                </form>
+                                <!--<form name="upload_form">
+                                    Single Image with validations
+                                    <input type="file"
+                                           ngf-select
+                                           ng-model="file"
+                                           name="file"
+                                           ngf-pattern="'image/*'"
+                                           accept="image/*"
+                                           ngf-max-size="20MB" />
+                                    Image thumbnail: <img style="width:100px;" ngf-thumbnail="file || '/thumb.jpg'" />
+                                    <i ng-show="upload_form.file.$error.required">*required</i><br>
+                                    <i ng-show="upload_form.file.$error.maxSize">
+                                        File too large
+                                        {{file.size / 1000000|number:1}}MB: max 20M
+                                    </i>
+                                    <button type="submit" ng-click="submit()">submit</button>
+                                </form>-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+        

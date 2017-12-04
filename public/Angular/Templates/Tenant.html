@@ -1,0 +1,151 @@
+﻿<style>
+    .ng-modal-overlay {
+        /* A dark translucent div that covers the whole screen */
+        position: absolute;
+        z-index: 9999;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #000000;
+        opacity: 0.8;
+    }
+
+    .ng-modal-dialog {
+        /* A centered div above the overlay with a box shadow. */
+        z-index: 10000;
+        position: absolute;
+        width: 50%; /* Default */
+        /* Center the dialog */
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        -webkit-transform: translate(-50%, -50%);
+        -moz-transform: translate(-50%, -50%);
+        background-color: #fff;
+        box-shadow: 4px 4px 80px #000;
+    }
+
+    .ng-modal-dialog-content {
+        padding: 10px;
+        text-align: left;
+    }
+
+    .ng-modal-close {
+        position: absolute;
+        top: 3px;
+        right: 5px;
+        padding: 5px;
+        cursor: pointer;
+        font-size: 120%;
+        display: inline-block;
+        font-weight: bold;
+        font-family: 'arial', 'sans-serif';
+    }
+</style>
+<div class="container">
+    <div class="panel">
+        <div class="panel-heading border">
+            <h1>
+                Tenants
+            </h1>
+        </div>
+        <div style="margin-left:15px">
+            <a ui-sref="home.CreateTenant"> <button class="btn btn-primary navbar-btn">Add Tenant</button> </a>
+        </div>
+        <div class="panel-body">
+            <table class="table table-bordered bordered table-striped table-condensed datatable" ui-jq="dataTable" ui-options="dataTableOpt">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Mobile</th>
+                        <th>RentAmount</th>
+                        <th>BuildingName</th>
+                        <th>Email</th>
+                        <th>Created Date</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="n in Tenants">
+                        <td>{{$index+1}} <input type="hidden" value="{{n._id}}" /></td>
+                        <td>  <a ui-sref="home.EditTenant({ id:n._id})" style="color:hotpink;cursor:pointer"> {{n.FirstName + " " + n.LastName}} </a></td>
+                        <td>{{n.Mobile}}</td>
+                        <td>{{n.RentAmount}}</td>
+                        <td>{{n.join_output[0].BuildingName}}</td>
+                        <td>{{n.Email}}</td>
+                        <td>{{n.Created_date | date:'dd/MM/yyyy'}}</td>
+
+                        <td style="width:135px"><button ng-click="toggleModalViewTenant({ id:n._id})" class="glyphicon glyphicon-open-file"></button> <button ng-click="deleteTenant({ id:n._id})" class="glyphicon glyphicon-trash"></button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<modal-dialog show='TenantsModalShown' width='750px' height='60%'>
+    <div class="row col-md-12 col-sm-12 col-xs-12">
+        <div class="col-md-6 col-sm-6 col-xs-6">
+            First Name : <span>{{tenantById.FirstName}}</span>
+        </div>
+        <div class="col-md-6 col-sm-6 col-xs-6">
+            Last Name : <span>{{tenantById.LastName}}</span>
+        </div>
+    </div>
+    <div class="row col-md-12 col-sm-12 col-xs-12">
+        <div class="col-md-6 col-sm-6 col-xs-6">
+            Email : <span>{{tenantById.Email}}</span>
+        </div>
+        <div class="col-md-6 col-sm-6 col-xs-6">
+            Mobile : <span>{{tenantById.Mobile}}</span>
+        </div>
+    </div>
+    <div class="row col-md-12 col-sm-12 col-xs-12">
+        <div class="col-md-6 col-sm-6 col-xs-6">
+            Home Phone : <span>{{tenantById.HomePhone}}</span>
+        </div>
+        <div class="col-md-6 col-sm-6 col-xs-6">
+            Work Phone : <span>{{tenantById.WorkPhone}}</span>
+        </div>
+    </div>
+    <div class="row col-md-12 col-sm-12 col-xs-12">
+        <div class="col-md-6 col-sm-6 col-xs-6">
+            Address1 : <span>{{tenantById.Address1}}</span>
+        </div>
+        <div class="col-md-6 col-sm-6 col-xs-6">
+            Address2 : <span>{{tenantById.Address2}}</span>
+        </div>
+    </div>
+    <div class="row col-md-12 col-sm-12 col-xs-12">
+        <div class="col-md-6 col-sm-6 col-xs-6">
+            City : <span>{{tenantById.City}}</span>
+        </div>
+        <div class="col-md-6 col-sm-6 col-xs-6">
+            State : <span>{{tenantById.State}}</span>
+        </div>
+    </div>
+    <div class="row col-md-12 col-sm-12 col-xs-12">
+        <div class="col-md-6 col-sm-6 col-xs-6">
+            ZipCode : <span>{{tenantById.ZipCode}}</span>
+        </div>
+        <div class="col-md-6 col-sm-6 col-xs-6">
+            Building Name : <span>{{tenantById.join_output[0].BuildingName}}</span>
+        </div>
+    </div>
+    <div class="row col-md-12 col-sm-12 col-xs-12">
+        <div class="col-md-6 col-sm-6 col-xs-6">
+            Building Unit Name : <span>{{tenantById.buildingUnit.FlatNumber}}</span>
+        </div>
+    </div>
+
+    <div class="row col-md-12 col-sm-12 col-xs-12">
+        <div class="col-md-6 col-sm-6 col-xs-6">
+            ID Proof 1 : <span><img width="60px" src="{{tenantById.AddressProof1}}" /> </span>
+        </div>
+        <div class="col-md-6 col-sm-6 col-xs-6">
+            ID Proof 2 : <span><img width="60px" src="{{tenantById.AddressProof2}}" /> </span>
+        </div>
+    </div>
+</modal-dialog>

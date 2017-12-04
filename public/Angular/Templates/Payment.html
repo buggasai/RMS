@@ -1,0 +1,126 @@
+﻿<style>
+    .ng-modal-overlay {
+        /* A dark translucent div that covers the whole screen */
+        position: absolute;
+        z-index: 9999;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #000000;
+        opacity: 0.8;
+    }
+
+    .ng-modal-dialog {
+        /* A centered div above the overlay with a box shadow. */
+        z-index: 10000;
+        position: absolute;
+        width: 50%; /* Default */
+        /* Center the dialog */
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        -webkit-transform: translate(-50%, -50%);
+        -moz-transform: translate(-50%, -50%);
+        background-color: #fff;
+        box-shadow: 4px 4px 80px #000;
+    }
+
+    .ng-modal-dialog-content {
+        padding: 10px;
+        text-align: left;
+    }
+
+    .ng-modal-close {
+        position: absolute;
+        top: 3px;
+        right: 5px;
+        padding: 5px;
+        cursor: pointer;
+        font-size: 120%;
+        display: inline-block;
+        font-weight: bold;
+        font-family: 'arial', 'sans-serif';
+    }
+
+    .dataTables_scroll {
+        overflow: auto;
+    }
+</style>
+<div class="container">
+    <div class="panel">
+        <div class="panel-heading border">
+            <h1>
+                Payments
+            </h1>
+        </div>
+        <div class="item form-group">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="Building">
+                Tenants
+            </label>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+                <select class="form-control" id="ddlTenants" ng-model="selectedItem" ng-change="onTenantChange(selectedItem)" name="Tenant">
+                    <option value=""> Select </option>
+                    <option ng-repeat="Tenant in Tenants" value="{{Tenant._id}}"> {{Tenant.FirstName + Tenant.LastName}} </option>
+                </select>
+            </div>
+        </div>
+        <div>
+            <a> <button class="btn btn-primary navbar-btn" ng-click="addPayment()">Add Payment</button> </a>
+        </div>
+        <div class="panel-body">
+            <table class="table table-bordered bordered table-striped table-condensed datatable" ui-jq="dataTable" ui-options="dataTableOpt">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Amount</th>
+                        <th>Date</th>
+                        <th>Payment for year</th>
+                        <th>Note</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="n in Payments">
+                        <td>{{$index+1}} <input type="hidden" value="{{n._id}}" /></td>
+                        <td>  <a ui-sref="home.EditPayment({ id:n._id})" style="color:hotpink;cursor:pointer"> {{n.Amount}} </a></td>
+                        <td>{{n.Date | date:'dd/MM/yyyy'}}</td>
+                        <td>{{n.PaymentForYear}}</td>
+                        <td>{{n.Note}}</td>
+
+                        <td style="width:135px">
+                            <button ng-click="togglePaymentModalShown({ id:n._id})" class="glyphicon glyphicon-open-file"></button>
+                            <button ng-click="deletePayment({ id:n._id})" class="glyphicon glyphicon-trash"></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<modal-dialog show='viewPaymentModalShown' width='750px' height='60%'>
+    <div class="row col-md-12 col-sm-12 col-xs-12">
+        <div class="col-md-6 col-sm-6 col-xs-6">
+            Amount : <span>{{paymentById.Amount}}</span>
+        </div>
+        <div class="col-md-6 col-sm-6 col-xs-6">
+            Date : <span>{{paymentById.Date}}</span>
+        </div>
+    </div>
+    <div class="row col-md-12 col-sm-12 col-xs-12">
+        <div class="col-md-6 col-sm-6 col-xs-6">
+            PaymentForMonth : <span>{{paymentById.PaymentForMonth}}</span>
+        </div>
+        <div class="col-md-6 col-sm-6 col-xs-6">
+            PaymentForYear : <span>{{paymentById.PaymentForYear}}</span>
+        </div>
+    </div>
+    <div class="row col-md-12 col-sm-12 col-xs-12">
+        <div class="col-md-6 col-sm-6 col-xs-6">
+            Photo : <span><img width="60px" src="{{paymentById.Attachment}}" /></span>
+        </div>
+        <div class="col-md-6 col-sm-6 col-xs-6">
+            Note : <span>{{paymentById.Note}}</span>
+        </div>
+    </div>
+</modal-dialog>
