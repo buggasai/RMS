@@ -6,9 +6,12 @@
   "author": "Scotch",
   "dependencies": {
     "body-parser": "^1.18.2",
-    "mongoose": "4.10.8",
     "express": "^4.10.8",
+    "jsonwebtoken": "^7.4.1",
+    "mongoose": "4.10.8",
+    "morgan": "^1.9.0",
+    "fs": "0.0.2",
     "method-override": "^2.3.10",
-    "morgan": "^1.9.0"
+    "multer": "1.1.0"
   }
 }
